@@ -1,0 +1,17 @@
+package com.mek.internshipproject.model
+
+
+import com.google.gson.annotations.SerializedName
+
+data class Location(
+    @SerializedName("coordinates")
+    val coordinates: Coordinates?,
+    @SerializedName("description")
+    val description: String?,
+    @SerializedName("id")
+    val id: Int?,
+    @SerializedName("image")
+    val image: String?,
+    @SerializedName("name")
+    val name: String?
+)
