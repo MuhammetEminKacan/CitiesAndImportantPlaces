@@ -55,34 +55,22 @@ dependencies {
     val nav_version = "2.8.0"
     implementation("androidx.navigation:navigation-fragment-ktx:$nav_version")
     implementation("androidx.navigation:navigation-ui-ktx:$nav_version")
-
     implementation("androidx.core:core-splashscreen:1.0.0")
-
     implementation("com.squareup.retrofit2:retrofit:2.11.0")
     implementation("com.squareup.retrofit2:converter-gson:2.11.0")
-
     implementation ("com.intuit.sdp:sdp-android:1.1.1")
     implementation ("com.intuit.ssp:ssp-android:1.1.1")
     implementation ("pl.droidsonroids.gif:android-gif-drawable:1.2.17")
-
     implementation ("com.github.bumptech.glide:glide:4.16.0")
-
-    //viewModel
     implementation("androidx.lifecycle:lifecycle-viewmodel:2.8.0")
     implementation("androidx.activity:activity-ktx:1.9.0")
-
-    //live data
     implementation("androidx.lifecycle:lifecycle-livedata:2.8.0")
     kapt("androidx.lifecycle:lifecycle-compiler:2.8.0")
-
-    // room
     val room_version = "2.6.1"
     implementation("androidx.room:room-runtime:$room_version")
     annotationProcessor("androidx.room:room-compiler:$room_version")
     kapt("androidx.room:room-compiler:$room_version")
     implementation("androidx.room:room-ktx:$room_version")
-
-    // viewmodel scope
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0")
 
 }
