@@ -2,6 +2,7 @@ package com.mek.internshipproject.ui.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.NavController
@@ -20,11 +21,15 @@ class MainActivity : AppCompatActivity() {
         initSplash()
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setSupportActionBar(binding.toolbar)
 
         navHostFragment = supportFragmentManager.findFragmentById(binding.fragmentContainerView.id) as NavHostFragment
         navController = navHostFragment.findNavController()
 
         setupActionBarWithNavController(navController)
+
+
+
 
     }
 

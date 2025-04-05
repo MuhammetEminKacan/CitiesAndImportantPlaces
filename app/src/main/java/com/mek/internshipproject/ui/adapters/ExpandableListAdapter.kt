@@ -1,11 +1,15 @@
 package com.mek.internshipproject.ui.adapters
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseExpandableListAdapter
+import android.widget.ExpandableListView
+import android.widget.ImageView
 import android.widget.TextView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.mek.internshipproject.R
 import com.mek.internshipproject.model.Data
 import com.mek.internshipproject.model.Location
@@ -56,7 +60,39 @@ class ExpandableListAdapter internal constructor(
             view =inflater.inflate(R.layout.citys_list,null)
         }
         val cityTextView =view?.findViewById<TextView>(R.id.textViewCityName)
-        cityTextView?.setText(cityTitle)
+        val openPlaceImageView = view?.findViewById<ImageView>(R.id.imageViewOpenImportantPlacesInTheCity)
+        val closePlaceImageView = view?.findViewById<ImageView>(R.id.imageViewCloseImportantPlacesInTheCity)
+        val goToMapsImageView = view?.findViewById<ImageView>(R.id.imageViewGoToMaps)
+
+        cityTextView?.text = cityTitle
+
+        val expandableListView = parent as ExpandableListView
+
+        view?.setOnClickListener(null)
+
+
+        if (cityData.locations.isNullOrEmpty()) {
+            openPlaceImageView?.visibility = View.GONE
+            closePlaceImageView?.visibility = View.GONE
+            goToMapsImageView?.visibility = View.GONE
+        } else {
+            if (isExpanded) {
+                openPlaceImageView?.visibility = View.INVISIBLE
+                closePlaceImageView?.visibility = View.VISIBLE
+            } else {
+                openPlaceImageView?.visibility = View.VISIBLE
+                closePlaceImageView?.visibility = View.INVISIBLE
+            }
+        }
+
+        openPlaceImageView?.setOnClickListener {
+            expandableListView.expandGroup(groupPosition,true)
+        }
+
+        closePlaceImageView?.setOnClickListener {
+            expandableListView.collapseGroup(groupPosition)
+        }
+
         return view
     }
 
