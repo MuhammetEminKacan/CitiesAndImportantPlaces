@@ -12,11 +12,16 @@
         tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_homeFragment_to_favoritesFragment"
-            app:destination="@id/favoritesFragment" />
+            app:destination="@id/favoritesFragment2" />
     </fragment>
     <fragment
-        android:id="@+id/favoritesFragment"
+        android:id="@+id/favoritesFragment2"
         android:name="com.mek.internshipproject.ui.fragments.FavoritesFragment"
         android:label="fragment_favorites"
         tools:layout="@layout/fragment_favorites" />
+    <fragment
+        android:id="@+id/favoritesDetailFragment"
+        android:name="com.mek.internshipproject.ui.fragments.FavoritesDetailFragment"
+        android:label="fragment_favorites_detail"
+        tools:layout="@layout/fragment_favorites_detail" />
 </navigation>

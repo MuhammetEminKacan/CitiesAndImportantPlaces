@@ -116,8 +116,8 @@ class HomeFragment : Fragment() {
                             viewModel.insertLocation(
                                 description = location.description ?:"açıklama yok",
                                 name = location.name ?: "isim yok",
-                                image = location.image!!,
-                                coordinates = location.coordinates!!,
+                                image = location.image,
+                                coordinates = location.coordinates,
                                 id = location.id!!
                             )
                         }
@@ -139,5 +139,8 @@ class HomeFragment : Fragment() {
     }
 
 
-
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }

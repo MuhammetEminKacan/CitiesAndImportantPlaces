@@ -39,7 +39,7 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun insertLocation(description : String,name : String,image : String,coordinates : Coordinates,id : Int){
+    fun insertLocation(description : String?,name : String?,image : String?,coordinates : Coordinates?,id : Int){
         viewModelScope.launch {
             repo.localData.insertLocation(location = Location(
                 coordinates = coordinates,
