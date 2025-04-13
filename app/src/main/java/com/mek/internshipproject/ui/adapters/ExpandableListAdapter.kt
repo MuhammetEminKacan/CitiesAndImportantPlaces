@@ -9,14 +9,17 @@ import android.widget.BaseExpandableListAdapter
 import android.widget.ExpandableListView
 import android.widget.ImageView
 import android.widget.TextView
-import com.google.android.material.floatingactionbutton.FloatingActionButton
+import android.widget.Toast
 import com.mek.internshipproject.R
 import com.mek.internshipproject.model.Data
 import com.mek.internshipproject.model.Location
+import com.mek.internshipproject.util.OnFavoriteClickListener
 
 class ExpandableListAdapter internal constructor(
     private val context: Context,
-    private val cityList : List<Data>
+    private val cityList : List<Data>,
+    private var favoriteLocations: List<Location>,
+    private val favoriteClickListener : OnFavoriteClickListener
 ) : BaseExpandableListAdapter(){
     override fun getGroupCount(): Int {
        return cityList.size
@@ -111,12 +114,35 @@ class ExpandableListAdapter internal constructor(
             val inflater =context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
             view =inflater.inflate(R.layout.places_list,null)
         }
+
+        view?.setOnClickListener(null)
+
         val locationTextView =view?.findViewById<TextView>(R.id.textViewLocationName)
+        val favEmpty = view?.findViewById<ImageView>(R.id.imageViewFavoriteEmpty)
+        val favFull = view?.findViewById<ImageView>(R.id.imageViewFavoriteFull)
         locationTextView?.setText(locationTitle)
+        val isFavorite = favoriteLocations.any{it.id == locationData.id}
+
+        favEmpty?.setOnClickListener {
+            favoriteClickListener.onFavoriteClick(locationData,false)
+        }
+
+        favFull?.setOnClickListener {
+            favoriteClickListener.onFavoriteClick(locationData, true)
+        }
+
+        favEmpty?.visibility = if (isFavorite) View.GONE else View.VISIBLE
+        favFull?.visibility = if (isFavorite) View.VISIBLE else View.GONE
+
         return view
     }
 
     override fun isChildSelectable(groupPosition: Int, childPosition: Int): Boolean {
         return true
+    }
+
+    fun updateFavorites(newFavorites: List<Location>) {
+        this.favoriteLocations = newFavorites
+        notifyDataSetChanged()
     }
 }

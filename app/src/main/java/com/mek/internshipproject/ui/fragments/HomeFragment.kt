@@ -16,14 +16,19 @@ import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import com.mek.internshipproject.R
 import com.mek.internshipproject.databinding.FragmentHomeBinding
+import com.mek.internshipproject.model.Location
 import com.mek.internshipproject.ui.adapters.ExpandableListAdapter
 import com.mek.internshipproject.ui.viewModels.HomeViewModel
+import com.mek.internshipproject.util.OnFavoriteClickListener
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class HomeFragment : Fragment() {
     private  var _binding : FragmentHomeBinding ?=null
     private val binding get() = _binding!!
     private val viewModel by viewModels<HomeViewModel>()
     private lateinit var listViewAdapter :ExpandableListAdapter
+    private var favoriteLocations : List<Location> = emptyList()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,6 +43,7 @@ class HomeFragment : Fragment() {
 
         viewModel.fetchCityLocations()
         observeCityList()
+        observeFavorites()
         observeIsLoading()
         observeErorMessage()
         closeAllTabs()
@@ -59,7 +65,11 @@ class HomeFragment : Fragment() {
         },viewLifecycleOwner,Lifecycle.State.RESUMED)
 
 
+
+
     }
+
+
 
 
     private fun closeAllTabs() {
@@ -95,9 +105,39 @@ class HomeFragment : Fragment() {
 
     private fun observeCityList() {
         viewModel.observeCityDataList().observe(viewLifecycleOwner, Observer { cities ->
-            listViewAdapter = ExpandableListAdapter(requireContext(),cities)
+            listViewAdapter = ExpandableListAdapter(requireContext(),
+                cities,
+                favoriteLocations,
+                object : OnFavoriteClickListener{
+                    override fun onFavoriteClick(location: Location,isFavorite : Boolean) {
+                        if (isFavorite){
+                            viewModel.deleteLocation(location)
+                        }else{
+                            viewModel.insertLocation(
+                                description = location.description ?:"açıklama yok",
+                                name = location.name ?: "isim yok",
+                                image = location.image!!,
+                                coordinates = location.coordinates!!,
+                                id = location.id!!
+                            )
+                        }
+
+                    }
+                }
+                )
             binding.ExpandableListView.setAdapter(listViewAdapter)
         })
     }
+
+    private fun observeFavorites() {
+        viewModel.getAllFavoriteLocations().observe(viewLifecycleOwner) { favorites ->
+            favoriteLocations = favorites
+            if (::listViewAdapter.isInitialized) {
+                listViewAdapter.updateFavorites(favorites)
+            }
+        }
+    }
+
+
 
 }
