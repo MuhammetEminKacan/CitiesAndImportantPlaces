@@ -10,9 +10,11 @@ import android.widget.ExpandableListView
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.navigation.Navigation
 import com.mek.internshipproject.R
 import com.mek.internshipproject.model.Data
 import com.mek.internshipproject.model.Location
+import com.mek.internshipproject.ui.fragments.HomeFragmentDirections
 import com.mek.internshipproject.util.OnFavoriteClickListener
 
 class ExpandableListAdapter internal constructor(
@@ -133,6 +135,11 @@ class ExpandableListAdapter internal constructor(
 
         favEmpty?.visibility = if (isFavorite) View.GONE else View.VISIBLE
         favFull?.visibility = if (isFavorite) View.VISIBLE else View.GONE
+
+        view?.setOnClickListener {
+            val action = HomeFragmentDirections.actionHomeFragmentToFavoritesDetailFragment(locationData)
+            Navigation.findNavController(it).navigate(action)
+        }
 
         return view
     }

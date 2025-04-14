@@ -5,6 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.Toolbar
+import androidx.navigation.fragment.navArgs
+import com.bumptech.glide.Glide
 import com.mek.internshipproject.R
 import com.mek.internshipproject.databinding.FragmentFavoritesDetailBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -13,6 +16,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class FavoritesDetailFragment : Fragment() {
     private var _binding : FragmentFavoritesDetailBinding ?= null
     private val binding get() = _binding!!
+
 
 
     override fun onCreateView(
@@ -25,6 +29,14 @@ class FavoritesDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val bundle : FavoritesDetailFragmentArgs by navArgs()
+        val getLocation = bundle.detail
+
+
+
+        binding.textViewDescription.text = getLocation.description
+        Glide.with(requireView()).load(getLocation.image).into(binding.imageViewCitiesPhoto)
 
     }
 

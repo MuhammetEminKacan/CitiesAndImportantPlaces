@@ -3,9 +3,11 @@ package com.mek.internshipproject.ui.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.mek.internshipproject.databinding.PlacesListBinding
 import com.mek.internshipproject.model.Location
+import com.mek.internshipproject.ui.fragments.FavoritesFragmentDirections
 import com.mek.internshipproject.util.OnFavoriteClickListener
 
 class FavoritesAdapter(private val favoriteClickListener : OnFavoriteClickListener) : RecyclerView.Adapter<FavoritesAdapter.viewHolder>() {
@@ -31,6 +33,13 @@ class FavoritesAdapter(private val favoriteClickListener : OnFavoriteClickListen
         myBinding.imageViewFavoriteEmpty.visibility = View.GONE
         myBinding.imageViewFavoriteFull.setOnClickListener {
             favoriteClickListener.onFavoriteClick(location,false)
+        }
+
+
+        myBinding.textViewLocationName.setOnClickListener {
+            val action = FavoritesFragmentDirections.actionFavoritesFragmentToFavoritesDetailFragment(location)
+            Navigation.findNavController(it).navigate(action)
+
         }
     }
 

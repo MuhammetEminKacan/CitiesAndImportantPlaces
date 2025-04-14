@@ -4,6 +4,7 @@ package com.mek.internshipproject.model
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 @Entity(tableName = "favorites_place")
 data class Location(
@@ -18,4 +19,4 @@ data class Location(
     val image: String?,
     @SerializedName("name")
     val name: String?
-)
+) : Serializable
