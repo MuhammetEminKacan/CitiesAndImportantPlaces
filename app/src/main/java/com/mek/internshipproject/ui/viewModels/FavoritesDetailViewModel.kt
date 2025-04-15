@@ -12,5 +12,4 @@ class FavoritesDetailViewModel @Inject constructor(
     private val repo : Repository
 ) : AndroidViewModel(application) {
 
-
 }

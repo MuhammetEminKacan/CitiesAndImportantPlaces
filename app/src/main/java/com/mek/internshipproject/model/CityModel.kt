@@ -2,6 +2,7 @@ package com.mek.internshipproject.model
 
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class CityModel(
     @SerializedName("currentPage")
@@ -16,4 +17,4 @@ data class CityModel(
     val total: Int?,
     @SerializedName("totalPage")
     val totalPage: Int?
-)
+) : Serializable
