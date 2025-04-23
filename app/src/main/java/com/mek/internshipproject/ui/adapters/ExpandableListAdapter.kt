@@ -1,6 +1,7 @@
 package com.mek.internshipproject.ui.adapters
 
 import android.content.Context
+import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +15,7 @@ import androidx.navigation.Navigation
 import com.mek.internshipproject.R
 import com.mek.internshipproject.model.Data
 import com.mek.internshipproject.model.Location
+import com.mek.internshipproject.ui.activities.MapsActivity
 import com.mek.internshipproject.ui.fragments.HomeFragmentDirections
 import com.mek.internshipproject.util.OnFavoriteClickListener
 
@@ -98,6 +100,16 @@ class ExpandableListAdapter internal constructor(
             expandableListView.collapseGroup(groupPosition)
         }
 
+        goToMapsImageView?.setOnClickListener {
+            val intent = Intent(context, MapsActivity::class.java)
+            intent.putExtra("city_name", cityTitle)
+
+            val locations = cityData.locations ?: emptyList()
+            intent.putExtra("locations_list", ArrayList(locations))
+
+            context.startActivity(intent)
+        }
+
         return view
     }
 
@@ -122,6 +134,7 @@ class ExpandableListAdapter internal constructor(
         val locationTextView =view?.findViewById<TextView>(R.id.textViewLocationName)
         val favEmpty = view?.findViewById<ImageView>(R.id.imageViewFavoriteEmpty)
         val favFull = view?.findViewById<ImageView>(R.id.imageViewFavoriteFull)
+
         locationTextView?.setText(locationTitle)
         val isFavorite = favoriteLocations.any{it.id == locationData.id}
 

@@ -75,13 +75,30 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
         getLocationPermission()
-        val intent = intent
-        val infoLat = intent.getDoubleExtra("lat",0.0)
-        val infoLng = intent.getDoubleExtra("lng",0.0)
-        val infoName = intent.getStringExtra("name")
-        val latLng = LatLng(infoLat,infoLng)
-        mMap.addMarker(MarkerOptions().position(latLng).title(infoName))
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,15f))
+
+        val locations = intent.getSerializableExtra("locations_list") as? ArrayList<com.mek.internshipproject.model.Location>
+
+        if (!locations.isNullOrEmpty()) {
+            for (loc in locations) {
+                val coords = loc.coordinates
+                if (coords != null) {
+                    val latLng = LatLng(coords.lat!!, coords.lng!!)
+                    mMap.addMarker(MarkerOptions().position(latLng).title(loc.name ?: ""))
+                }
+            }
+            val first = locations.first().coordinates
+            if (first != null) {
+                val latLng = LatLng(first.lat!!, first.lng!!)
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f))
+            }
+        } else {
+            val infoLat = intent.getDoubleExtra("lat", 0.0)
+            val infoLng = intent.getDoubleExtra("lng", 0.0)
+            val infoName = intent.getStringExtra("name")
+            val latLng = LatLng(infoLat, infoLng)
+            mMap.addMarker(MarkerOptions().position(latLng).title(infoName))
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f))
+        }
     }
 
     private fun registerLauncher(){
